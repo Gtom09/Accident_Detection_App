@@ -16,18 +16,18 @@ const EmergencyScreen = () => {
   const [circleText, setCircleText] = useState('EMERGENCY');
   const [sound, setSound] = useState();
 
-  const twilioAccountSID = 'AC4dde5e595dc4be61cefd995ee8cce6a2';
-  const twilioAuthToken = '83a4c850ada1c2722893c0176787bb5b';
-  const twilioPhoneNumber = '+12017541340';
+  const twilioAccountSID = '';
+  const twilioAuthToken = '';
+  const twilioPhoneNumber = '';
 
   const handleButtonPress = async (url) => {
     setButtonClicked(true);
 
-    if (url === 'https://bit.ly/retratoone') {
+    if (url === '') {
       Linking.openURL(url);
       await getCurrentLocation();
       // await sendEmergencyText();
-    } else if (url === 'https://google.com') {
+    } else if (url === '') {
       setStopTimer(true);
       setCircleColor('green');
 
@@ -39,8 +39,8 @@ const EmergencyScreen = () => {
   };
 
   const sendEmergencyText = async (latitude, longitude) => {
-    const messageBody = `It's an Emergency! Your contact has met with an accident. Current location: ${latitude}, ${longitude} and the last location is: https://maps.app.goo.gl/v13wQqD2wtBtX7qW8 `;
-    const toPhoneNumber = '+916361884365'; // Replace with the actual user's phone number
+    const messageBody = `It's an Emergency! Your contact has met with an accident. Current location: ${latitude}, ${longitude}`;
+    const toPhoneNumber = ''; // Replace with the actual user's phone number
 
     try {
       const response = await fetch(`https://api.twilio.com/2010-04-01/Accounts/${twilioAccountSID}/Messages.json`, {
@@ -98,7 +98,7 @@ const EmergencyScreen = () => {
         timeoutId = setTimeout(async () => {
           // When the timer reaches zero, call the location function
           await getCurrentLocation();
-          Linking.openURL('https://bit.ly/retratoone');
+          Linking.openURL('');
         }, 10000);
       }
 
@@ -157,14 +157,14 @@ const EmergencyScreen = () => {
           <TouchableOpacity
             style={styles.button}
             onPress={() => {
-              handleButtonPress('https://bit.ly/retratoone');
+              handleButtonPress('');
             }}
           >
             <Text style={styles.buttonText}>EMERGENCY</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={[styles.button, { backgroundColor: circleColor }]}
-            onPress={() => handleButtonPress('https://google.com')}
+            onPress={() => handleButtonPress('')}
           >
             <Text style={styles.buttonText}>{stopTimer ? '       EXIT       ' : '   CANCEL   '}</Text>
           </TouchableOpacity>
